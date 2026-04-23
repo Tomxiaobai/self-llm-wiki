@@ -7,6 +7,7 @@ source_paths:
   - raw/harness-agent-深度解读.md
   - raw/harness-agent.pdf
   - raw/harness_demo.py
+  - raw/hermes-agent/
 tags:
   - topic
   - harness
@@ -61,11 +62,22 @@ Agent Harness 指包裹模型与工具调用的运行时治理层，通常可拆
 - `L`：生命周期钩子
 - `V`：评估接口
 
+## 具体工程样例
+
+- [[hermes-agent]] 是当前仓库里最具体的 harness 实践样例之一：
+  - `run_agent.py` 对应 `E`
+  - `ToolRegistry` 对应 `T`
+  - `context_compressor.py` 对应 `C`
+  - `MemoryManager` 与 SQLite/FTS5 对应 `S`
+  - Gateway 审批、命令和会话钩子体现 `L`
+- 它也说明了一个现实问题：当这些能力都集中在同一个系统里时，harness 往往会快速长成高复杂度单体。
+
 ## 与其他主题的关系
 
 - [[agentic-rag]] 需要 Harness 才能可靠执行多步检索
 - [[a2a]] 与 [[eino]] 分别填补“跨 Agent 协作”和“单 Agent 编排”的位置
 - [[agent-platform]] 是这些能力的系统化组合
+- [[hermes-agent]] 展示了另一种“全栈单体式 harness”路线
 
 ## 代表性来源
 
@@ -73,4 +85,5 @@ Agent Harness 指包裹模型与工具调用的运行时治理层，通常可拆
 - [[harness-实战架构版]]
 - [[harness-agent-深度解读]]
 - [[harness-demo-源码说明]]
+- [[hermes-agent-资料集]]
 - [[pdf-论文目录与首轮摘要]]

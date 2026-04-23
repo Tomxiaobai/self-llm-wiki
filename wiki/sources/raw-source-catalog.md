@@ -28,6 +28,7 @@ tags:
 | `raw/harness-agent-深度解读.md` | [[harness-agent-深度解读]] | Agent Harness Survey 中文深读 |
 | `raw/harness_demo.py` | [[harness-demo-源码说明]] | Harness 六组件的最小代码示例 |
 | `raw/agent-platform/` | [[agent-platform-项目骨架]] | Go 项目骨架、文档与代码结构 |
+| `raw/hermes-agent/` | [[hermes-agent-资料集]] | Hermes Agent 8 篇结构化源码解读与项目映射 |
 | `raw/2501.09136v3.pdf` | [[agentic-rag-survey]] | Agentic RAG 核心综述，已拆独立论文页 |
 | `raw/2408.08921v2.pdf` | [[graph-rag-survey]] | GraphRAG 核心综述，已拆独立论文页 |
 | `raw/harness-agent.pdf` | [[agent-harness-survey]] | Harness 核心综述原文页 |
@@ -56,3 +57,4 @@ tags:
 - [[graph-rag]]
 - [[agentic-rag]]
 - [[agent-harness]]
+- [[hermes-agent]]

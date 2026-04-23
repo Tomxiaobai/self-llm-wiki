@@ -20,6 +20,15 @@
 - [[eino]] - Go Agent 编排框架页
 - [[a2a]] - Agent-to-Agent 协议页
 - [[agent-platform]] - Go Agent 平台骨架项目页
+- [[hermes-agent]] - Python 全栈 Agent 项目页
+
+## Concepts
+
+- [[tool-registry]] - 工具注册、发现、可用性与分发
+- [[context-compression]] - 长对话压缩与上下文保真
+- [[memory]] - 跨轮与跨会话记忆
+- [[message-gateway]] - 多平台消息接入与会话隔离
+- [[multi-provider-adaptation]] - 多模型 Provider 出口适配
 
 ## Sources
 
@@ -33,6 +42,15 @@
 - [[harness-agent-深度解读]]
 - [[harness-demo-源码说明]]
 - [[agent-platform-项目骨架]]
+- [[hermes-agent-资料集]]
+- [[hermes-agent-全景图]]
+- [[hermes-agent-核心循环]]
+- [[hermes-agent-tool-registry]]
+- [[hermes-agent-多provider适配]]
+- [[hermes-agent-上下文压缩]]
+- [[hermes-agent-消息网关]]
+- [[hermes-agent-memory与rl训练]]
+- [[hermes-agent-三方对比]]
 - [[agentic-rag-survey]]
 - [[graph-rag-survey]]
 - [[agent-harness-survey]]
@@ -57,5 +75,6 @@
 
 ## Next Priority
 
-- 补 `MCP`、`Memory`、`Context Pruning` 相关主题页
+- 补 `MCP` 相关主题页
+- 为 `Memory` 理论综述和 `SWE-Pruner` 拆更细的来源页
 - 继续把问答沉淀到 `wiki/analyses/`

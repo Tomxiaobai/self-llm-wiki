@@ -21,7 +21,7 @@ tags:
 1. 理论与综述：RAG、GraphRAG、Agentic AI、Agent 设计模式相关论文与综述
 2. 框架与协议：Eino、A2A，以及后续可能出现的 MCP 相关材料
 3. 实战方案：系统蓝图、项目设计稿、架构实战稿
-4. 实现样例：`raw/agent-platform/` 代码与文档
+4. 实现样例：`raw/agent-platform/` 代码与文档，以及 `raw/hermes-agent/` 的结构化源码解读
 
 ## 工作目标
 
@@ -35,7 +35,8 @@ tags:
 - 已建立 `raw` 到 Wiki 的映射目录：[[raw-source-catalog]]
 - 已完成 Eino、A2A、Agent 模式、Harness、项目设计与 `agent-platform` 的首轮来源页
 - 已建立 [[rag]]、[[graph-rag]]、[[agentic-rag]]、[[agent-harness]] 四条主题主线
-- 已建立 [[eino]]、[[a2a]]、[[agent-platform]] 三个高复用中层页面
+- 已建立 [[eino]]、[[a2a]]、[[agent-platform]]、[[hermes-agent]] 四个高复用中层页面
+- 已补充 [[tool-registry]]、[[context-compression]]、[[memory]]、[[message-gateway]]、[[multi-provider-adaptation]] 五个关键概念页
 
 ## 当前优先级
 
@@ -47,6 +48,7 @@ tags:
 - Agentic RAG
 - GraphRAG
 - `agent-platform`
+- `hermes-agent`
 
 ## 使用约定
 
