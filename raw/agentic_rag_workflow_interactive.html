@@ -1,0 +1,76 @@
+<style>
+.step{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin:0 0 2px;cursor:pointer;transition:all .2s;border-left:3px solid transparent}
+.step:hover{background:var(--color-background-primary);border-left-color:var(--color-border-info)}
+.step.active{background:var(--color-background-primary);border-left-color:var(--color-text-info);box-shadow:0 0 0 0.5px var(--color-border-secondary)}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--color-background-info);color:var(--color-text-info);font-size:12px;font-weight:500;margin-right:8px;flex-shrink:0}
+.step.active .step-num{background:var(--color-text-info);color:#fff}
+.step-title{font-weight:500;font-size:14px;color:var(--color-text-primary)}
+.step-desc{font-size:13px;color:var(--color-text-secondary);margin-top:6px;display:none;line-height:1.6}
+.step.active .step-desc{display:block}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:var(--border-radius-md);margin:4px 4px 0 0}
+.tag-r{background:var(--color-background-info);color:var(--color-text-info)}
+.tag-p{background:var(--color-background-success);color:var(--color-text-success)}
+.tag-t{background:var(--color-background-warning);color:var(--color-text-warning)}
+.tag-m{background:var(--color-background-danger);color:var(--color-text-danger)}
+.mode-bar{display:flex;gap:6px;margin:0 0 16px}
+.mode-btn{font-size:12px;padding:6px 14px;border-radius:var(--border-radius-md);cursor:pointer;border:0.5px solid var(--color-border-tertiary);background:transparent;color:var(--color-text-secondary);transition:all .15s}
+.mode-btn:hover{background:var(--color-background-secondary)}
+.mode-btn.active{background:var(--color-text-info);color:#fff;border-color:var(--color-text-info)}
+</style>
+<div style="font-size:15px;font-weight:500;color:var(--color-text-primary);margin:0 0 4px">Agentic RAG 工作流程</div>
+<div style="font-size:13px;color:var(--color-text-secondary);margin:0 0 12px">选择架构模式，点击步骤查看详情</div>
+<div class="mode-bar">
+  <button class="mode-btn active" onclick="setMode('single')">单智能体</button>
+  <button class="mode-btn" onclick="setMode('multi')">多智能体</button>
+  <button class="mode-btn" onclick="setMode('corrective')">纠错式</button>
+  <button class="mode-btn" onclick="setMode('adaptive')">自适应</button>
+</div>
+<div id="steps"></div>
+<script>
+const data={
+  single:[
+    {t:'用户提交查询',d:'查询进入系统，由协调智能体接收并分析查询意图、类型和所需数据源。',tags:[['规划','p']]},
+    {t:'知识源选择与路由',d:'智能体评估查询后，动态选择最合适的数据源：结构化数据库（Text-to-SQL）、语义搜索（向量检索）、网络搜索（实时信息）或推荐系统。',tags:[['工具使用','t'],['规划','p']]},
+    {t:'数据检索与整合',d:'从选定数据源并行或串行获取相关信息，将检索结果传递给 LLM 进行综合分析。',tags:[['工具使用','t']]},
+    {t:'LLM 合成响应',d:'LLM 整合多源数据，结合预训练知识，生成连贯、上下文相关的综合回答。',tags:[['反思','r']]},
+    {t:'输出生成',d:'最终答案以简洁可操作的格式呈现给用户，可选附加引用来源。',tags:[]}
+  ],
+  multi:[
+    {t:'查询提交与分发',d:'用户查询由主协调智能体接收，分析后委派给多个专门化检索智能体处理。',tags:[['规划','p'],['多智能体','m']]},
+    {t:'专门化智能体并行检索',d:'Agent A 处理结构化查询（SQL），Agent B 进行语义搜索，Agent C 执行网络搜索，Agent D 调用推荐系统。每个智能体独立运作、并行执行。',tags:[['工具使用','t'],['多智能体','m']]},
+    {t:'跨源数据整合',d:'各智能体的检索结果汇总到协调层，去重、校验、排序后传入 LLM。',tags:[['多智能体','m']]},
+    {t:'LLM 多源合成',d:'LLM 从不同智能体的结果中提取关键洞察，综合生成统一连贯的回答。',tags:[['反思','r']]},
+    {t:'综合输出',d:'整合多个领域的信息后，生成全面且精准的最终响应。',tags:[]}
+  ],
+  corrective:[
+    {t:'上下文检索',d:'从向量数据库中检索初始上下文文档集合。',tags:[['工具使用','t']]},
+    {t:'相关性评估',d:'相关性评估智能体逐一判断检索文档的质量：标记为"相关"、"模糊"或"不相关"。不相关的文档被过滤或触发纠错流程。',tags:[['反思','r']]},
+    {t:'查询优化（如需要）',d:'查询优化智能体利用语义理解重写查询，提升检索精度。若上下文不足，外部知识检索智能体还会进行网络搜索补充。',tags:[['反思','r'],['工具使用','t']]},
+    {t:'外部知识补充',d:'当内部数据不足时，智能体主动从外部数据源（网络、备选数据库）获取补充信息。',tags:[['工具使用','t'],['规划','p']]},
+    {t:'验证后合成响应',d:'所有经过验证的信息传入响应合成智能体，生成准确、可靠的最终回答，最大限度减少幻觉。',tags:[['反思','r']]}
+  ],
+  adaptive:[
+    {t:'查询复杂度分类',d:'一个轻量级分类器（小型语言模型）分析查询，预测其复杂度等级：简单事实型、中等检索型、或复杂多步推理型。',tags:[['规划','p']]},
+    {t:'策略动态选择',d:'简单查询直接用 LLM 知识回答（跳过检索）；中等查询执行单步检索；复杂查询激活多步迭代检索策略。',tags:[['规划','p']]},
+    {t:'按需检索执行',d:'根据选定策略执行相应级别的检索：从零检索到多轮渐进式检索，逐步收集和精炼中间结果。',tags:[['工具使用','t']]},
+    {t:'幻觉检测与回路',d:'生成结果后检查是否存在幻觉或未回答的问题，若发现则回到检索步骤重新获取信息。',tags:[['反思','r']]},
+    {t:'最优响应输出',d:'在资源效率和回答质量之间取得最优平衡，输出精准的最终答案。',tags:[]}
+  ]
+};
+let mode='single';
+function setMode(m){
+  mode=m;
+  document.querySelectorAll('.mode-btn').forEach((b,i)=>{b.classList.toggle('active',['single','multi','corrective','adaptive'][i]===m)});
+  render();
+}
+function render(){
+  const c=document.getElementById('steps');
+  c.innerHTML=data[mode].map((s,i)=>`<div class="step${i===0?' active':''}" onclick="toggle(this)"><div style="display:flex;align-items:center"><span class="step-num">${i+1}</span><span class="step-title">${s.t}</span></div><div class="step-desc">${s.d}<div style="margin-top:6px">${s.tags.map(([l,c])=>`<span class="tag tag-${c}">${l}</span>`).join('')}</div></div></div>`).join('');
+}
+function toggle(el){
+  const was=el.classList.contains('active');
+  el.parentElement.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  if(!was)el.classList.add('active');
+}
+render();
+</script>

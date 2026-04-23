@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Obsidian local state
+.obsidian/
+
+# Editors and local caches
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Python caches
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Binary installers / local downloads
+*.dmg
+
+# Generated temporary artifacts
+outputs/tmp/*
+!outputs/tmp/.gitkeep

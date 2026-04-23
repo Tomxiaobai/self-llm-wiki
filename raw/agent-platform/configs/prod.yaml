@@ -1,0 +1,15 @@
+app:
+  name: agent-platform
+  env: prod
+
+http:
+  api_addr: ":8080"
+  gateway_addr: ":8081"
+  rag_addr: ":8082"
+  search_addr: ":8083"
+  report_addr: ":8084"
+
+policy:
+  enable_approval: true
+  max_steps: 20
+  max_retry: 3
